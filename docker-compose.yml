@@ -1,0 +1,22 @@
+
+services:
+  backend:
+    build:
+      context: .  # Points to the root directory where backend and docker-compose.yml are located
+      dockerfile: Dockerfile  # Backend Dockerfile is located at the root
+    container_name: django-backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app  # Maps the backend folder to the container
+    ports:
+      - "8000:8000"
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: .  # Points to the root directory where frontend and Dockerfile are located
+      dockerfile: ./frontend/Dockerfile  # Specifies that the Dockerfile is inside the frontend folder
+    container_name: react-frontend
+    ports:
+      - "80:80"
